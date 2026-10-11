@@ -25,10 +25,40 @@ bool save_roster(const std::vector<Mech>& roster,
 
 
 // TODO (Checkpoints 2 and 3): implement load_roster.
-bool load_roster([[maybe_unused]] const std::string& path,
-                 [[maybe_unused]] std::vector<Mech>& roster,
-                 [[maybe_unused]] int& skipped_lines) {
-    return false;
+bool load_roster(const std::string& path,
+                 std::vector<Mech>& roster,
+                 int& skipped_lines) {
+
+    std::ifstream loadMech(path);
+
+    if (!loadMech) {
+        return false;
+    }
+
+    std::vector<Mech> temp_roster;
+    std::string line;
+    skipped_lines = 0;
+
+    while (std::getline(loadMech, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
+        std::stringstream ss(line);
+        std::string name;
+        int hp = 0;
+        int attack = 0;
+        int armor = 0;
+        char comma1 = '\0';
+        char comma2 = '\0';
+
+        if (std::getline(ss, name, ',') && (ss >> hp >> comma1 >> attack >> comma2 >> armor)) {
+            temp_roster.emplace_back(name, hp, attack, armor);
+        }
+    }
+
+    roster = std::move(temp_roster);
+    return true;
 }
 
 // TODO (Checkpoint 4): implement append_line.

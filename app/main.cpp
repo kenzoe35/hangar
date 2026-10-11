@@ -94,6 +94,14 @@ int main() {
             // TODO (Checkpoints 2 and 3): call load_roster() with roster_path.
             // On success, print how many mechs are in the roster and how many
             // lines were skipped. On failure, print a clear error message.
+            int skipped = 0;
+		if (load_roster(roster_path, roster, skipped)) {
+			std::cout << "Roster loaded. " << roster.size() << " mechs in the roster. "
+				<< skipped << " lines skipped.\n";
+		}
+		else {
+			std::cout << "Error: could not load roster from " << roster_path << ".\n";
+		}
 
         } else if (choice == 5) {
             if (roster.empty()) {
