@@ -62,7 +62,13 @@ bool load_roster(const std::string& path,
 }
 
 // TODO (Checkpoint 4): implement append_line.
-bool append_line([[maybe_unused]] const std::string& path,
-                 [[maybe_unused]] const std::string& text) {
-    return false;
+bool append_line(const std::string& path,
+                 const std::string& text) {
+    std::ofstream file(path, std::ios::app);
+    if (!file) {
+        return false;
+    }
+
+    file << text << "\n";
+    return true;
 }

@@ -123,17 +123,29 @@ int main() {
 
             // TODO (Checkpoint 4a): append a line to battle_log_path made of
             // timestamp(), a space, and result.summary.
-
+            append_line(battle_log_path, timestamp() + " " + result.summary);
             // TODO (Checkpoint 4b): if the fighter was destroyed, append a line to
             // graveyard_path saying who was destroyed and by whom, then remove the
             // fighter from the roster. (Do not use fighter after removing it.)
-
+            if (fighter.is_destroyed()) {
+                append_line(graveyard_path, fighter.name() + " was destroyed by " + result.opponent_name);
+                roster.erase(roster.begin() + (index - 1));
+            }
         } else {
             // TODO (Stretch): ask whether to save the roster before quitting.
-            break;
-        }
+            std::cout << "Save roster before quitting? (y/n): ";
+            std::string answer;
+            if (std::cin >> answer && (answer == "y" || answer == "Y")) {
+                if (save_roster(roster, roster_path)) {
+                    std::cout << "Roster saved.\n";
+                }
+                else {
+                    std::cout << "Failed to save roster.\n";
+                }
+            }
+    	    break;
+       }
     }
-
     std::cout << "Hangar closed.\n";
     return 0;
 }
