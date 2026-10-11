@@ -84,7 +84,12 @@ int main() {
         } else if (choice == 3) {
             // TODO (Checkpoint 1): call save_roster() with roster and roster_path.
             // Print "Roster saved." on success, or a clear error message on failure.
-
+		if (save_roster(roster, roster_path)) {
+			std::cout << "Roster saved.\n";
+		}
+		else {
+			std::cout << "Error: could not save roster to " << roster_path << ".\n";
+		}
         } else if (choice == 4) {
             // TODO (Checkpoints 2 and 3): call load_roster() with roster_path.
             // On success, print how many mechs are in the roster and how many
